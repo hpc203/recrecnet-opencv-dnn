@@ -130,7 +130,7 @@ void get_ori_rigid_mesh_tp(Mat& tp, Mat& ori_mesh_np_x, Mat& ori_mesh_np_y, cons
 	}
 }
 
-Mat _interpolate(Mat im, Mat xy_flat, Size out_size)  ////xy_flatµÄÐÎ×´ÊÇ(2, 65536)
+Mat _interpolate(Mat im, Mat xy_flat, Size out_size)  ////xy_flatçš„å½¢çŠ¶æ˜¯(2, 65536)
 {
 	const int height = im.size[2];
 	const int width = im.size[3];
@@ -139,7 +139,7 @@ Mat _interpolate(Mat im, Mat xy_flat, Size out_size)  ////xy_flatµÄÐÎ×´ÊÇ(2, 655
 	const float height_f = float(height);
 	const float width_f = float(width);
 	const int area = height * width;
-	const float* pdata = (float*)im.data;   ////ÐÎ×´ÊÇ(1,3,256,256)
+	const float* pdata = (float*)im.data;   ////å½¢çŠ¶æ˜¯(1,3,256,256)
 	Mat output(out_size.height, out_size.width, CV_32FC3);
 	for (int i = 0; i < height; i++)
 	{
@@ -163,7 +163,7 @@ Mat _interpolate(Mat im, Mat xy_flat, Size out_size)  ////xy_flatµÄÐÎ×´ÊÇ(2, 655
 			int idx_a = base_y0 + x0;
 			int idx_b = base_y1 + x0;
 			int idx_c = base_y0 + x1;
-			int idx_d = base_y1 + x;
+			int idx_d = base_y1 + x1;
 
 			float x0_f = float(x0);
 			float x1_f = float(x1);
@@ -191,14 +191,14 @@ Mat draw_mesh_on_warp(const Mat warp, const Mat f_local_x, const Mat f_local_y)
 	const int grid_h = f_local_x.rows - 1;
 	const int grid_w = f_local_x.cols - 1;
 
-	double minValue_x, maxValue_x;    // ×î´óÖµ£¬×îÐ¡Öµ
-	cv::Point  minIdx_x, maxIdx_x;    // ×îÐ¡Öµ×ø±ê£¬×î´óÖµ×ø±ê     
+	double minValue_x, maxValue_x;    // æœ€å¤§å€¼ï¼Œæœ€å°å€¼
+	cv::Point  minIdx_x, maxIdx_x;    // æœ€å°å€¼åæ ‡ï¼Œæœ€å¤§å€¼åæ ‡     
 	cv::minMaxLoc(f_local_x, &minValue_x, &maxValue_x, &minIdx_x, &maxIdx_x);
 	const int min_w = int(std::min(minValue_x, 0.0));
 	const int max_w = int(std::max(maxValue_x, double(width)));
 
-	double minValue_y, maxValue_y;    // ×î´óÖµ£¬×îÐ¡Öµ
-	cv::Point  minIdx_y, maxIdx_y;    // ×îÐ¡Öµ×ø±ê£¬×î´óÖµ×ø±ê     
+	double minValue_y, maxValue_y;    // æœ€å¤§å€¼ï¼Œæœ€å°å€¼
+	cv::Point  minIdx_y, maxIdx_y;    // æœ€å°å€¼åæ ‡ï¼Œæœ€å¤§å€¼åæ ‡     
 	cv::minMaxLoc(f_local_y, &minValue_y, &maxValue_y, &minIdx_y, &maxIdx_y);
 	const int min_h = int(std::min(minValue_y, 0.0));
 	const int max_h = int(std::max(maxValue_y, double(height)));
